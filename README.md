@@ -2,7 +2,7 @@
 	<img src="assets/keychron-launcher-wrapper.png" alt="Keychron Launcher Wrapper icon" width="115" />
 </p>
 
-# Keychron Launcher Wrapper (macOS)
+# Keychron Launcher Wrapper
 
 Minimal Electron desktop utility that opens the official Keychron Launcher in a dedicated app window, with WebHID support for configuring a Keychron K3 Max over wired USB.
 
@@ -11,7 +11,8 @@ Minimal Electron desktop utility that opens the official Keychron Launcher in a 
 - Dedicated wrapper app, not a general-purpose browser
 - Loads the official Keychron Launcher site
 - Uses Electron's embedded Chromium runtime
-- Targets macOS first
+- Primary target and distribution platform: macOS
+- Also runs locally on Windows and Linux (WebHID behavior may vary by OS/runtime support)
 
 ## Features
 
@@ -30,10 +31,17 @@ Minimal Electron desktop utility that opens the official Keychron Launcher in a 
 │   ├── workflows/
 │   │   └── build-macos.yml
 │   └── copilot-instructions.md
+├── assets/
+│   └── keychron-launcher-wrapper.png
+├── build/
+│   ├── entitlements.mac.inherit.plist
+│   └── entitlements.mac.plist
 ├── src/
 │   ├── main.js
 │   └── preload.js
 ├── AGENTS.md
+├── CHANGELOG.md
+├── CONTRIBUTING.md
 ├── LICENSE
 ├── README.md
 └── package.json
@@ -41,7 +49,8 @@ Minimal Electron desktop utility that opens the official Keychron Launcher in a 
 
 ## Requirements
 
-- macOS
+- macOS (primary target and packaging)
+- Windows and Linux (local runtime support)
 - Node.js 20+ (recommended)
 - Keychron K3 Max connected by USB cable
 
