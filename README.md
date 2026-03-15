@@ -51,7 +51,7 @@ Minimal Electron desktop utility that opens the official Keychron Launcher in a 
 
 - macOS (primary target and packaging)
 - Windows and Linux (local runtime support)
-- Node.js 20+ (recommended)
+- Node.js 22+ (recommended)
 - Keychron K3 Max connected by USB cable
 
 ## Install
@@ -157,9 +157,9 @@ How to download build outputs:
 
 How to publish to GitHub Releases:
 
-1. Create and push a version tag, for example `v0.1.0` or `0.1.0`.
+1. Create and push a version tag, for example `v0.0.3` or `0.0.3`.
 2. The workflow builds macOS artifacts and publishes them to the release for that tag.
-3. Ensure `CHANGELOG.md` contains a section like `## [0.1.0]` so release notes are populated.
+3. Ensure `CHANGELOG.md` contains a section like `## [0.0.3]` so release notes are populated.
 
 Required GitHub Actions secrets for signed/notarized releases:
 

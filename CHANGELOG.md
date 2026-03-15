@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog, and this project follows Semantic Versioning.
 
+## [0.0.3] - 2026-03-15
+
+### Added
+
+- Added release automation for macOS builds with changelog-based GitHub Release notes.
+- Added signing and notarization preparation for release builds using Apple credentials from GitHub Actions secrets.
+- Added macOS entitlements files for hardened runtime packaging.
+
+### Changed
+
+- Updated CI to use Node.js 22 LTS.
+- Expanded and aligned README content for scope, platform support, release flow, and signing/notarization requirements.
+- Improved app branding details (icon usage in dialogs and release documentation consistency).
+
 ## [0.0.2] - 2026-03-15
 
 ### Changed
