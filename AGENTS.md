@@ -1,5 +1,5 @@
 ## Scope
-This repository is a minimal Electron macOS utility that wraps the official Keychron Launcher website for Keychron K3 Max configuration.
+This repository is a minimal Electron macOS utility that wraps the official Keychron Launcher website for Keychron keyboard configuration.
 
 ## Priorities
 1. Working WebHID support

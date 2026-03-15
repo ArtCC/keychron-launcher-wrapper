@@ -1,6 +1,6 @@
 # Task
 
-Build a minimal macOS desktop utility using Electron that loads the official Keychron Launcher website inside a dedicated app window, so I can configure my Keychron K3 Max without installing Google Chrome, Microsoft Edge, Opera, or any other general-purpose browser on my Mac.
+Build a minimal macOS desktop utility using Electron that loads the official Keychron Launcher website inside a dedicated app window, so I can configure my Keychron keyboards without installing Google Chrome, Microsoft Edge, Opera, or any other general-purpose browser on my Mac.
 
 # Core goal
 
@@ -14,7 +14,7 @@ Do not build a generic browser.
 # Product constraints
 
 - Target platform: macOS
-- Main device: Keychron K3 Max
+- Main devices: Keychron keyboards
 - Primary connection mode: wired USB
 - Use Electron as the runtime
 - Chromium embedded in Electron is acceptable
@@ -28,7 +28,7 @@ Do not build a generic browser.
 1. On launch, open the official Keychron Launcher URL directly.
 2. Support WebHID inside Electron so the site can request access to the keyboard.
 3. The app should be a single-purpose utility for configuring the keyboard.
-4. It should work with Keychron K3 Max over cable.
+4. It should work with Keychron keyboards over cable.
 5. Keep the UX minimal and stable.
 6. If useful, show a very small pre-launch hint like “Connect the keyboard by cable before continuing”.
 7. Restrict navigation to only the domains strictly needed for Keychron Launcher.
@@ -102,7 +102,7 @@ Provide:
 2. Full source files
 3. Commands to install and run
 4. Short explanation of how HID permission handling works in the app
-5. Short explanation of how to test with a Keychron K3 Max
+5. Short explanation of how to test with Keychron keyboards
 6. Known limitations / risks
 
 # Notes

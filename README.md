@@ -4,7 +4,10 @@
 
 # Keychron Launcher Wrapper
 
-Minimal Electron desktop utility that opens the official Keychron Launcher in a dedicated app window, with WebHID support for configuring a Keychron K3 Max over wired USB.
+> Disclaimer: This is an independent community project and is not an official Keychron product.
+> Keychron and related names are trademarks of their respective owners.
+
+Minimal Electron desktop utility that opens the official Keychron Launcher in a dedicated app window, with WebHID support for configuring Keychron keyboards over wired USB.
 
 ## Scope
 
@@ -52,7 +55,7 @@ Minimal Electron desktop utility that opens the official Keychron Launcher in a 
 - macOS (primary target and packaging)
 - Windows and Linux (local runtime support)
 - Node.js 22+ (recommended)
-- Keychron K3 Max connected by USB cable
+- Keychron keyboard connected by USB cable
 
 ## Install
 
@@ -114,7 +117,7 @@ KEYCHRON_ALLOWED_HOSTS="example-cdn.com,assets.example.com" npm start
 
 Use this only for hostnames that are strictly required by the official Keychron Launcher.
 
-## Verify WebHID with Keychron K3 Max
+## Verify WebHID with Keychron Keyboards
 
 1. Connect the keyboard in wired mode (USB cable).
 2. Run the app: `npm start`.
@@ -173,6 +176,14 @@ Required GitHub Actions secrets for signed/notarized releases:
 
 - Official releases: https://github.com/ArtCC/keychron-launcher-wrapper/releases
 - Published release artifacts are signed and notarized by Apple when the required signing secrets are configured.
+
+## TODO
+
+- [ ] Add Windows packaging and distribution (`.exe`, NSIS installer).
+- [ ] Add Linux packaging and distribution (`.deb` for Debian/Ubuntu and derivatives).
+- [ ] Evaluate additional Linux targets (for example, AppImage and `.rpm`) based on demand.
+- [ ] Add CI matrix jobs for Windows and Linux artifacts.
+- [ ] Add platform-specific verification notes for WebHID behavior on Windows and Linux.
 
 ## Limitations and Risks
 

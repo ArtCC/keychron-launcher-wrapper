@@ -66,7 +66,7 @@ Before opening a PR:
 When filing a bug, include:
 
 - macOS version
-- Keyboard model (for example, Keychron K3 Max)
+- Keyboard model (for example, any Keychron keyboard)
 - Connection mode (wired/wireless)
 - Steps to reproduce
 - Relevant logs (redact sensitive data)
