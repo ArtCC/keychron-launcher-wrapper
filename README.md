@@ -127,7 +127,7 @@ npm run dist:mac
 This repository includes a workflow at `.github/workflows/build-macos.yml`.
 
 - Trigger on `main`: build artifacts on every push.
-- Trigger on tags `v*`: publish DMG/ZIP to GitHub Releases.
+- Trigger on tags `v*` or `*.*.*`: publish DMG/ZIP to GitHub Releases.
 - Runner: `macos-latest`.
 - Output on `main`: `dist/*.dmg` and `dist/*.zip` uploaded as workflow artifacts.
 - Output on tags: release assets attached to the corresponding GitHub Release.
@@ -140,7 +140,7 @@ How to download build outputs:
 
 How to publish to GitHub Releases:
 
-1. Create and push a version tag, for example `v0.1.0`.
+1. Create and push a version tag, for example `v0.1.0` or `0.1.0`.
 2. The workflow builds macOS artifacts and publishes them to the release for that tag.
 
 ## Limitations and Risks
