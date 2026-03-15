@@ -153,6 +153,21 @@ Required GitHub Actions secrets for signed/notarized releases:
 - Official releases: https://github.com/ArtCC/keychron-launcher-wrapper/releases
 - Published release artifacts are signed and notarized by Apple when the required signing secrets are configured.
 
+## GitHub Pages
+
+This repository includes a static landing page in `docs/` for GitHub Pages.
+
+- Local files: `docs/index.html` and `docs/styles.css`
+- Expected URL after enabling Pages: https://artcc.github.io/keychron-launcher-wrapper/
+
+How to enable it:
+
+1. Open repository Settings on GitHub.
+2. Go to Pages.
+3. In Build and deployment, choose Deploy from a branch.
+4. Select branch `main` and folder `/docs`.
+5. Save and wait for deployment.
+
 ## Project Structure
 
 ```text
@@ -166,6 +181,9 @@ Required GitHub Actions secrets for signed/notarized releases:
 ├── build/
 │   ├── entitlements.mac.inherit.plist
 │   └── entitlements.mac.plist
+├── docs/
+│   ├── index.html
+│   └── styles.css
 ├── src/
 │   ├── main.js
 │   └── preload.js
