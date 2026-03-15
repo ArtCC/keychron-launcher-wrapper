@@ -78,6 +78,12 @@ KEYCHRON_DEBUG=1 ELECTRON_ENABLE_LOGGING=1 ELECTRON_ENABLE_STACK_DUMPING=1 npm s
 
 This enables app-level debug logs from the Electron main process plus Chromium/Electron runtime logs.
 
+### DevTools behavior
+
+- In development (`npm start`), DevTools is enabled by default.
+- In packaged builds, DevTools is disabled by default.
+- To force-enable DevTools in a packaged build for diagnostics, set `KEYCHRON_DEVTOOLS=1` before launch.
+
 ## WebHID Permission Handling
 
 The app uses Electron session APIs to keep HID access explicit and scoped:
@@ -181,5 +187,5 @@ This project is licensed under the [Apache License 2.0](LICENSE).
 
 ## Author
 
-Arturo Carretero Calvo  
+Arturo Carretero Calvo - 2026
 GitHub: [ArtCC](https://github.com/ArtCC)
