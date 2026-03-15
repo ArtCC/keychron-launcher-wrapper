@@ -126,15 +126,22 @@ npm run dist:mac
 
 This repository includes a workflow at `.github/workflows/build-macos.yml`.
 
-- Trigger: every push to `main` and manual runs via `workflow_dispatch`.
+- Trigger on `main`: build artifacts on every push.
+- Trigger on tags `v*`: publish DMG/ZIP to GitHub Releases.
 - Runner: `macos-latest`.
-- Output: `dist/*.dmg` and `dist/*.zip` uploaded as workflow artifacts.
+- Output on `main`: `dist/*.dmg` and `dist/*.zip` uploaded as workflow artifacts.
+- Output on tags: release assets attached to the corresponding GitHub Release.
 
 How to download build outputs:
 
 1. Open the repository Actions tab on GitHub.
 2. Select the latest `Build macOS DMG` run.
 3. Download the artifact named `keychron-launcher-wrapper-macos-<commit-sha>`.
+
+How to publish to GitHub Releases:
+
+1. Create and push a version tag, for example `v0.1.0`.
+2. The workflow builds macOS artifacts and publishes them to the release for that tag.
 
 ## Limitations and Risks
 
