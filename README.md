@@ -27,6 +27,8 @@ Minimal Electron desktop utility that opens the official Keychron Launcher in a 
 ```text
 .
 ├── .github/
+│   ├── workflows/
+│   │   └── build-macos.yml
 │   └── copilot-instructions.md
 ├── src/
 │   ├── main.js
@@ -119,6 +121,20 @@ npm run dist:mac
 
 - `pack:mac`: builds an unpacked macOS app directory.
 - `dist:mac`: builds distributables (DMG and ZIP).
+
+## Automated DMG Build (GitHub Actions)
+
+This repository includes a workflow at `.github/workflows/build-macos.yml`.
+
+- Trigger: every push to `main` and manual runs via `workflow_dispatch`.
+- Runner: `macos-latest`.
+- Output: `dist/*.dmg` and `dist/*.zip` uploaded as workflow artifacts.
+
+How to download build outputs:
+
+1. Open the repository Actions tab on GitHub.
+2. Select the latest `Build macOS DMG` run.
+3. Download the artifact named `keychron-launcher-wrapper-macos-<commit-sha>`.
 
 ## Limitations and Risks
 

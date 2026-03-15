@@ -1,0 +1,37 @@
+name: Build macOS DMG
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build macOS distributables
+        run: npm run dist:mac
+
+      - name: Upload DMG and ZIP artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: keychron-launcher-wrapper-macos-${{ github.sha }}
+          path: |
+            dist/*.dmg
+            dist/*.zip
+          if-no-files-found: error
+          retention-days: 30
