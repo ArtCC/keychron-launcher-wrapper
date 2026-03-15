@@ -132,6 +132,7 @@ This repository includes a workflow at `.github/workflows/build-macos.yml`.
 - Output on `main`: `dist/*.dmg` and `dist/*.zip` uploaded as workflow artifacts.
 - Output on tags: release assets attached to the corresponding GitHub Release.
 - Release notes: extracted from the matching version section in `CHANGELOG.md`.
+- Tag releases require Apple signing/notarization secrets in GitHub Actions.
 
 How to download build outputs:
 
@@ -145,10 +146,18 @@ How to publish to GitHub Releases:
 2. The workflow builds macOS artifacts and publishes them to the release for that tag.
 3. Ensure `CHANGELOG.md` contains a section like `## [0.1.0]` so release notes are populated.
 
+Required GitHub Actions secrets for signed/notarized releases:
+
+- `CSC_LINK`: base64-encoded `Developer ID Application` `.p12` certificate.
+- `CSC_KEY_PASSWORD`: password for the `.p12` certificate.
+- `APPLE_API_KEY_BASE64`: base64-encoded App Store Connect API key (`.p8`).
+- `APPLE_API_KEY_ID`: App Store Connect API key ID.
+- `APPLE_API_ISSUER`: App Store Connect issuer ID.
+
 ## Releases
 
 - Official releases: https://github.com/ArtCC/keychron-launcher-wrapper/releases
-- Published release artifacts are signed and notarized by Apple.
+- Published release artifacts are signed and notarized by Apple when the required signing secrets are configured.
 
 ## Limitations and Risks
 

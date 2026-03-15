@@ -25,6 +25,10 @@
     ],
     "mac": {
       "icon": "assets/keychron-launcher-wrapper.png",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.inherit.plist",
       "category": "public.app-category.utilities",
       "target": [
         "dmg",
