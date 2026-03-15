@@ -187,5 +187,6 @@ This project is licensed under the [Apache License 2.0](LICENSE).
 
 ## Author
 
-Arturo Carretero Calvo - 2026
 GitHub: [ArtCC](https://github.com/ArtCC)
+
+Arturo Carretero Calvo - 2026
