@@ -2,11 +2,15 @@
 
 const fs = require("node:fs");
 const path = require("node:path");
-const { app, BrowserWindow, dialog, nativeImage, session } = require("electron");
+const { app, BrowserWindow, dialog, nativeImage, nativeTheme, session } = require("electron");
 
 const KEYCHRON_LAUNCHER_URL = "https://launcher.keychron.com";
+const APP_NAME = "Keychron Launcher Wrapper";
+const APP_WINDOW_TITLE = "Keychron Launcher Wrapper";
 const DEBUG_LOGS = process.env.KEYCHRON_DEBUG === "1";
 const APP_ICON_PATH = path.join(__dirname, "..", "assets", "keychron-launcher-wrapper.png");
+
+app.setName(APP_NAME);
 
 // Add only domains that are required by the official launcher.
 const ALLOWED_HOST_PATTERNS = [
@@ -22,6 +26,15 @@ const EXTRA_ALLOWED_HOSTS = (process.env.KEYCHRON_ALLOWED_HOSTS || "")
   .filter(Boolean);
 
 let mainWindow = null;
+
+function getAppIconImage() {
+  if (!fs.existsSync(APP_ICON_PATH)) {
+    return undefined;
+  }
+
+  const icon = nativeImage.createFromPath(APP_ICON_PATH);
+  return icon.isEmpty() ? undefined : icon;
+}
 
 function logDebug(message, meta) {
   if (!DEBUG_LOGS) {
@@ -180,10 +193,12 @@ app.on("web-contents-created", (_event, contents) => {
 });
 
 async function maybeShowConnectionHint() {
+  const appIcon = getAppIconImage();
   const result = await dialog.showMessageBox({
     type: "info",
     title: "Keychron Launcher Wrapper",
     message: "Connect your keyboard by cable before continuing.",
+    icon: appIcon,
     buttons: ["Continue", "Quit"],
     defaultId: 0,
     cancelId: 1,
@@ -199,6 +214,7 @@ async function maybeShowConnectionHint() {
 }
 
 async function validateHidAvailability(win) {
+  const appIcon = getAppIconImage();
   try {
     const hasHid = await win.webContents.executeJavaScript("typeof navigator.hid !== 'undefined'", true);
     if (!hasHid) {
@@ -206,6 +222,7 @@ async function validateHidAvailability(win) {
         type: "warning",
         title: "WebHID Not Available",
         message: "navigator.hid is not available in this session.",
+        icon: appIcon,
         detail: "Try updating Electron or check macOS security permissions for USB/HID access."
       });
     }
@@ -214,20 +231,34 @@ async function validateHidAvailability(win) {
       type: "error",
       title: "Validation Error",
       message: "Failed to validate WebHID availability.",
+      icon: appIcon,
       detail: String(error)
     });
   }
 }
 
+function getWindowBackgroundColor() {
+  return nativeTheme.shouldUseDarkColors ? "#1e1e1e" : "#f2f2f2";
+}
+
+function applyMacWindowAppearance(win) {
+  if (process.platform !== "darwin" || !win || win.isDestroyed()) {
+    return;
+  }
+
+  win.setBackgroundColor(getWindowBackgroundColor());
+}
+
 function createMainWindow() {
   const windowOptions = {
+    title: APP_WINDOW_TITLE,
     width: 1280,
     height: 900,
     minWidth: 1024,
     minHeight: 700,
     show: false,
     autoHideMenuBar: true,
-    backgroundColor: "#111111",
+    backgroundColor: getWindowBackgroundColor(),
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       nodeIntegration: false,
@@ -242,7 +273,12 @@ function createMainWindow() {
     windowOptions.icon = APP_ICON_PATH;
   }
 
+  if (process.platform === "darwin") {
+    windowOptions.titleBarStyle = "default";
+  }
+
   mainWindow = new BrowserWindow(windowOptions);
+  applyMacWindowAppearance(mainWindow);
 
   hardenNavigation(mainWindow);
 
@@ -261,6 +297,11 @@ function createMainWindow() {
 
   mainWindow.webContents.on("console-message", (_event, level, message, line, sourceId) => {
     logDebug("renderer-console", { level, message, line, sourceId });
+  });
+
+  mainWindow.on("page-title-updated", (event) => {
+    event.preventDefault();
+    mainWindow.setTitle(APP_WINDOW_TITLE);
   });
 
   mainWindow.loadURL(KEYCHRON_LAUNCHER_URL);
@@ -282,6 +323,10 @@ app.whenReady().then(async () => {
   }
 
   createMainWindow();
+
+  nativeTheme.on("updated", () => {
+    applyMacWindowAppearance(mainWindow);
+  });
 
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
