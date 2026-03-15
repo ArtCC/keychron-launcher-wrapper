@@ -1,3 +1,7 @@
+<p align="center">
+	<img src="assets/keychron-launcher-wrapper.png" alt="Keychron Launcher Wrapper icon" width="115" />
+</p>
+
 # Keychron Launcher Wrapper (macOS)
 
 Minimal Electron desktop utility that opens the official Keychron Launcher in a dedicated app window, with WebHID support for configuring a Keychron K3 Max over wired USB.
