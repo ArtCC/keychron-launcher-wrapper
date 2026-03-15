@@ -59,7 +59,46 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build and publish macOS release artifacts
-        run: npm run dist:mac -- --publish onTag
+      - name: Build macOS distributables
+        run: npm run dist:mac -- --publish never
+
+      - name: Generate release notes from CHANGELOG
+        id: changelog
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          TAG_NAME="${GITHUB_REF_NAME}"
+          VERSION="${TAG_NAME#v}"
+          NOTES_FILE="release-notes.md"
+
+          awk -v version="$VERSION" '
+            $0 ~ "^## \\[" version "\\]" { in_section = 1; print; next }
+            in_section && $0 ~ "^## \\[" { exit }
+            in_section { print }
+          ' CHANGELOG.md > "$NOTES_FILE"
+
+          if [[ ! -s "$NOTES_FILE" ]]; then
+            {
+              echo "## [$VERSION]"
+              echo
+              echo "No changelog entry found for this version."
+            } > "$NOTES_FILE"
+          fi
+
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "notes_file=$NOTES_FILE" >> "$GITHUB_OUTPUT"
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Keychron Launcher Wrapper v${{ steps.changelog.outputs.version }}
+          body_path: ${{ steps.changelog.outputs.notes_file }}
+          files: |
+            dist/*.dmg
+            dist/*.zip
+          fail_on_unmatched_files: true
+          generate_release_notes: false
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

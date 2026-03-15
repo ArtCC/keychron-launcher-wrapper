@@ -131,6 +131,7 @@ This repository includes a workflow at `.github/workflows/build-macos.yml`.
 - Runner: `macos-latest`.
 - Output on `main`: `dist/*.dmg` and `dist/*.zip` uploaded as workflow artifacts.
 - Output on tags: release assets attached to the corresponding GitHub Release.
+- Release notes: extracted from the matching version section in `CHANGELOG.md`.
 
 How to download build outputs:
 
@@ -142,11 +143,17 @@ How to publish to GitHub Releases:
 
 1. Create and push a version tag, for example `v0.1.0` or `0.1.0`.
 2. The workflow builds macOS artifacts and publishes them to the release for that tag.
+3. Ensure `CHANGELOG.md` contains a section like `## [0.1.0]` so release notes are populated.
+
+## Releases
+
+- Official releases: https://github.com/ArtCC/keychron-launcher-wrapper/releases
+- Published release artifacts are signed and notarized by Apple.
 
 ## Limitations and Risks
 
 - This wrapper depends on compatibility between the official Keychron Launcher site and the Chromium version bundled with the selected Electron version.
-- macOS distribution outside local development usually requires code signing and notarization, which are not configured in this minimal starter.
+- Local builds may be unsigned unless you configure signing and notarization in your own environment.
 - If the official launcher adds new third-party domains, the allowlist may need updates (or temporary extension via `KEYCHRON_ALLOWED_HOSTS`).
 - HID access still depends on OS-level device behavior, cable quality, and keyboard mode/state.
 
