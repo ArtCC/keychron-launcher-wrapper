@@ -122,3 +122,12 @@ npm run dist:mac
 - macOS distribution outside local development usually requires code signing and notarization, which are not configured in this minimal starter.
 - If the official launcher adds new third-party domains, the allowlist may need updates (or temporary extension via `KEYCHRON_ALLOWED_HOSTS`).
 - HID access still depends on OS-level device behavior, cable quality, and keyboard mode/state.
+
+## License
+
+This project is licensed under the [Apache License 2.0](LICENSE).
+
+## Author
+
+Arturo Carretero Calvo  
+GitHub: [ArtCC](https://github.com/ArtCC)
