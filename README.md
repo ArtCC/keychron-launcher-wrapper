@@ -26,30 +26,6 @@ Minimal Electron desktop utility that opens the official Keychron Launcher in a 
 - Domain allowlisting and navigation hardening
 - Optional pre-launch hint: connect keyboard by cable before continuing
 
-## Project Structure
-
-```text
-.
-├── .github/
-│   ├── workflows/
-│   │   └── build-macos.yml
-│   └── copilot-instructions.md
-├── assets/
-│   └── keychron-launcher-wrapper.png
-├── build/
-│   ├── entitlements.mac.inherit.plist
-│   └── entitlements.mac.plist
-├── src/
-│   ├── main.js
-│   └── preload.js
-├── AGENTS.md
-├── CHANGELOG.md
-├── CONTRIBUTING.md
-├── LICENSE
-├── README.md
-└── package.json
-```
-
 ## Requirements
 
 - macOS (primary target and packaging)
@@ -87,6 +63,17 @@ This enables app-level debug logs from the Electron main process plus Chromium/E
 - In packaged builds, DevTools is disabled by default.
 - To force-enable DevTools in a packaged build for diagnostics, set `KEYCHRON_DEVTOOLS=1` before launch.
 
+## Verify WebHID with Keychron Keyboards
+
+1. Connect the keyboard in wired mode (USB cable).
+2. Run the app: `npm start`.
+3. Confirm the launcher page loads.
+4. In the launcher UI, trigger device connection.
+5. Confirm a HID chooser appears and select the Keychron device.
+6. Confirm the launcher can read/configure the keyboard.
+
+If `navigator.hid` is unavailable, the app displays a warning dialog after page load.
+
 ## WebHID Permission Handling
 
 The app uses Electron session APIs to keep HID access explicit and scoped:
@@ -116,17 +103,6 @@ KEYCHRON_ALLOWED_HOSTS="example-cdn.com,assets.example.com" npm start
 ```
 
 Use this only for hostnames that are strictly required by the official Keychron Launcher.
-
-## Verify WebHID with Keychron Keyboards
-
-1. Connect the keyboard in wired mode (USB cable).
-2. Run the app: `npm start`.
-3. Confirm the launcher page loads.
-4. In the launcher UI, trigger device connection.
-5. Confirm a HID chooser appears and select the Keychron device.
-6. Confirm the launcher can read/configure the keyboard.
-
-If `navigator.hid` is unavailable, the app displays a warning dialog after page load.
 
 ## macOS Packaging (Starter)
 
@@ -176,6 +152,30 @@ Required GitHub Actions secrets for signed/notarized releases:
 
 - Official releases: https://github.com/ArtCC/keychron-launcher-wrapper/releases
 - Published release artifacts are signed and notarized by Apple when the required signing secrets are configured.
+
+## Project Structure
+
+```text
+.
+├── .github/
+│   ├── workflows/
+│   │   └── build-macos.yml
+│   └── copilot-instructions.md
+├── assets/
+│   └── keychron-launcher-wrapper.png
+├── build/
+│   ├── entitlements.mac.inherit.plist
+│   └── entitlements.mac.plist
+├── src/
+│   ├── main.js
+│   └── preload.js
+├── AGENTS.md
+├── CHANGELOG.md
+├── CONTRIBUTING.md
+├── LICENSE
+├── README.md
+└── package.json
+```
 
 ## TODO
 
