@@ -1,6 +1,6 @@
 # Installation and Usage
 
-This document explains how to use Keychron Launcher Wrapper on macOS, Windows, and Linux.
+This document explains how to use Keychron Launcher Wrapper on Linux distribution, macOS, and Windows.
 
 ## Supported Platforms
 
@@ -22,7 +22,7 @@ WebHID behavior may vary by OS/runtime support.
 npm install
 ```
 
-## Run in Development
+## Local Usage (Linux distribution, macOS, Windows)
 
 ```bash
 npm start
@@ -54,26 +54,8 @@ npm run dist:mac
 
 ## macOS Releases
 
-- Official releases: https://github.com/ArtCC/keychron-launcher-wrapper/releases
+- Download the latest macOS installer (`.dmg`) from: https://github.com/ArtCC/keychron-launcher-wrapper/releases
 - Published release artifacts are signed and notarized by Apple when the required signing secrets are configured.
-
-### Windows (PowerShell)
-
-```powershell
-$env:KEYCHRON_DEBUG="1"
-$env:ELECTRON_ENABLE_LOGGING="1"
-$env:ELECTRON_ENABLE_STACK_DUMPING="1"
-npm start
-```
-
-### Windows (Command Prompt)
-
-```bat
-set KEYCHRON_DEBUG=1
-set ELECTRON_ENABLE_LOGGING=1
-set ELECTRON_ENABLE_STACK_DUMPING=1
-npm start
-```
 
 ## DevTools Behavior
 
