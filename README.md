@@ -26,53 +26,17 @@ Minimal Electron desktop utility that opens the official Keychron Launcher in a 
 - Domain allowlisting and navigation hardening
 - Optional pre-launch hint: connect keyboard by cable before continuing
 
-## Requirements
+## TODO
 
-- macOS (primary target and packaging)
-- Windows and Linux (local runtime support)
-- Node.js 22+ (recommended)
-- Keychron keyboard connected by USB cable
+- [ ] Add Windows packaging and distribution (`.exe`, NSIS installer).
+- [ ] Add Linux packaging and distribution (`.deb` for Debian/Ubuntu and derivatives).
+- [ ] Evaluate additional Linux targets (for example, AppImage and `.rpm`) based on demand.
+- [ ] Add CI matrix jobs for Windows and Linux artifacts.
+- [ ] Add platform-specific verification notes for WebHID behavior on Windows and Linux.
 
-## Install
+## Installation and Usage
 
-```bash
-npm install
-```
-
-## Run in Development
-
-```bash
-npm start
-```
-
-At launch, the app shows a small reminder dialog to connect the keyboard by cable.
-
-### Debug Logging
-
-To troubleshoot HID permission flow and renderer messages, run:
-
-```bash
-KEYCHRON_DEBUG=1 ELECTRON_ENABLE_LOGGING=1 ELECTRON_ENABLE_STACK_DUMPING=1 npm start
-```
-
-This enables app-level debug logs from the Electron main process plus Chromium/Electron runtime logs.
-
-### DevTools behavior
-
-- In development (`npm start`), DevTools is enabled by default.
-- In packaged builds, DevTools is disabled by default.
-- To force-enable DevTools in a packaged build for diagnostics, set `KEYCHRON_DEVTOOLS=1` before launch.
-
-## Verify WebHID with Keychron Keyboards
-
-1. Connect the keyboard in wired mode (USB cable).
-2. Run the app: `npm start`.
-3. Confirm the launcher page loads.
-4. In the launcher UI, trigger device connection.
-5. Confirm a HID chooser appears and select the Keychron device.
-6. Confirm the launcher can read/configure the keyboard.
-
-If `navigator.hid` is unavailable, the app displays a warning dialog after page load.
+Setup, runtime usage, WebHID verification, and platform notes for macOS, Windows, and Linux are documented in [INSTALL.md](INSTALL.md).
 
 ## WebHID Permission Handling
 
@@ -104,69 +68,12 @@ KEYCHRON_ALLOWED_HOSTS="example-cdn.com,assets.example.com" npm start
 
 Use this only for hostnames that are strictly required by the official Keychron Launcher.
 
-## macOS Packaging (Starter)
+## Limitations and Risks
 
-Build scripts are configured with `electron-builder`:
-
-```bash
-npm run pack:mac
-npm run dist:mac
-```
-
-- `pack:mac`: builds an unpacked macOS app directory.
-- `dist:mac`: builds distributables (DMG and ZIP).
-
-## Automated DMG Build (GitHub Actions)
-
-This repository includes a workflow at `.github/workflows/build-macos.yml`.
-
-- Trigger on `main`: build artifacts on every push.
-- Trigger on tags `v*` or `*.*.*`: publish DMG/ZIP to GitHub Releases.
-- Runner: `macos-latest`.
-- Output on `main`: `dist/*.dmg` and `dist/*.zip` uploaded as workflow artifacts.
-- Output on tags: release assets attached to the corresponding GitHub Release.
-- Release notes: extracted from the matching version section in `CHANGELOG.md`.
-- Tag releases require Apple signing/notarization secrets in GitHub Actions.
-
-How to download build outputs:
-
-1. Open the repository Actions tab on GitHub.
-2. Select the latest `Build macOS DMG` run.
-3. Download the artifact named `keychron-launcher-wrapper-macos-<commit-sha>`.
-
-How to publish to GitHub Releases:
-
-1. Create and push a version tag, for example `v0.0.3` or `0.0.3`.
-2. The workflow builds macOS artifacts and publishes them to the release for that tag.
-3. Ensure `CHANGELOG.md` contains a section like `## [0.0.3]` so release notes are populated.
-
-Required GitHub Actions secrets for signed/notarized releases:
-
-- `CSC_LINK`: base64-encoded `Developer ID Application` `.p12` certificate.
-- `CSC_KEY_PASSWORD`: password for the `.p12` certificate.
-- `APPLE_API_KEY_BASE64`: base64-encoded App Store Connect API key (`.p8`).
-- `APPLE_API_KEY_ID`: App Store Connect API key ID.
-- `APPLE_API_ISSUER`: App Store Connect issuer ID.
-
-## Releases
-
-- Official releases: https://github.com/ArtCC/keychron-launcher-wrapper/releases
-- Published release artifacts are signed and notarized by Apple when the required signing secrets are configured.
-
-## GitHub Pages
-
-This repository includes a static landing page in `docs/` for GitHub Pages.
-
-- Local files: `docs/index.html` and `docs/styles.css`
-- Expected URL after enabling Pages: https://artcc.github.io/keychron-launcher-wrapper/
-
-How to enable it:
-
-1. Open repository Settings on GitHub.
-2. Go to Pages.
-3. In Build and deployment, choose Deploy from a branch.
-4. Select branch `main` and folder `/docs`.
-5. Save and wait for deployment.
+- This wrapper depends on compatibility between the official Keychron Launcher site and the Chromium version bundled with the selected Electron version.
+- Local builds may be unsigned unless you configure signing and notarization in your own environment.
+- If the official launcher adds new third-party domains, the allowlist may need updates (or temporary extension via `KEYCHRON_ALLOWED_HOSTS`).
+- HID access still depends on OS-level device behavior, cable quality, and keyboard mode/state.
 
 ## Project Structure
 
@@ -190,25 +97,11 @@ How to enable it:
 ├── AGENTS.md
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
+├── INSTALL.md
 ├── LICENSE
 ├── README.md
 └── package.json
 ```
-
-## TODO
-
-- [ ] Add Windows packaging and distribution (`.exe`, NSIS installer).
-- [ ] Add Linux packaging and distribution (`.deb` for Debian/Ubuntu and derivatives).
-- [ ] Evaluate additional Linux targets (for example, AppImage and `.rpm`) based on demand.
-- [ ] Add CI matrix jobs for Windows and Linux artifacts.
-- [ ] Add platform-specific verification notes for WebHID behavior on Windows and Linux.
-
-## Limitations and Risks
-
-- This wrapper depends on compatibility between the official Keychron Launcher site and the Chromium version bundled with the selected Electron version.
-- Local builds may be unsigned unless you configure signing and notarization in your own environment.
-- If the official launcher adds new third-party domains, the allowlist may need updates (or temporary extension via `KEYCHRON_ALLOWED_HOSTS`).
-- HID access still depends on OS-level device behavior, cable quality, and keyboard mode/state.
 
 ## License
 
